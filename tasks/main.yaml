@@ -30,7 +30,7 @@
 
 - name: render prometheus-rds-exporter.yaml
   ansible.builtin.template:
-    src: prometheus-rds-exporter.yaml.j2
+    src: prometheus-rds-exporter.j2.yaml
     dest: "{{ prometheus_rds_exporter_install_path }}/prometheus-rds-exporter.yaml"
     owner: "{{ prometheus_rds_exporter_user }}"
     group: "{{ prometheus_rds_exporter_user }}"
@@ -40,7 +40,7 @@
 
 - name: render systemd unit
   ansible.builtin.template:
-    src: prometheus-rds-exporter.service.j2
+    src: prometheus-rds-exporter.j2.service
     dest: /usr/lib/systemd/system/prometheus-rds-exporter.service
     owner: root
     group: root
