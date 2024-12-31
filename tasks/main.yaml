@@ -1,0 +1,55 @@
+- name: create user
+  ansible.builtin.user:
+    name: "{{ prometheus_rds_exporter_user }}"
+    create_home: false
+    system: true
+
+- name: create directory
+  ansible.builtin.file:
+    path: /opt/prometheus-rds-exporter
+    owner: "{{ prometheus_rds_exporter_user }}"
+    group: "{{ prometheus_rds_exporter_user }}"
+    state: directory
+
+- name: download
+  become: yes
+  become_user: "{{ prometheus_rds_exporter_user }}"
+  ansible.builtin.get_url:
+    url: "{{ prometheus_rds_exporter_download_url }}"
+    dest: "{{ prometheus_rds_exporter_install_path }}/prometheus-rds-exporter_Linux.tar.gz"
+    checksum: "{{ prometheus_rds_exporter_checksum }}"
+
+- name: unarchive
+  become: yes
+  become_user: "{{ prometheus_rds_exporter_user }}"
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: "{{ prometheus_rds_exporter_install_path }}/prometheus-rds-exporter_Linux.tar.gz"
+    dest: "{{ prometheus_rds_exporter_install_path }}"
+    creates: "{{ prometheus_rds_exporter_install_path }}/prometheus-rds-exporter"
+
+- name: render prometheus-rds-exporter.yaml
+  ansible.builtin.template:
+    src: prometheus-rds-exporter.yaml.j2
+    dest: "{{ prometheus_rds_exporter_install_path }}/prometheus-rds-exporter.yaml"
+    owner: "{{ prometheus_rds_exporter_user }}"
+    group: "{{ prometheus_rds_exporter_user }}"
+    mode: '0644'
+  notify:
+    - restart prometheus-rds-exporter
+
+- name: render systemd unit
+  ansible.builtin.template:
+    src: prometheus-rds-exporter.service.j2
+    dest: /usr/lib/systemd/system/prometheus-rds-exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload systemd daemon
+
+- name: enable and start service
+  ansible.builtin.systemd_service:
+    name: prometheus-rds-exporter
+    state: started
+    enabled: true

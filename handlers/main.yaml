@@ -1,0 +1,8 @@
+- name: restart prometheus-rds-exporter
+  ansible.builtin.systemd:
+    name: prometheus-rds-exporter
+    state: restarted
+
+- name: reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes

@@ -1,0 +1,9 @@
+prometheus_rds_exporter_version: 0.10.1
+prometheus_rds_exporter_checksum: "{% if ansible_architecture == 'aarch64' %}sha256:6efc312708442b3af890d0b37150734d78385c94c99cfc006725c6a9a369f1e8{% else %}sha256:849d9d49a5788555767dc1a817d554cc506f69e759448ee1efa70bd770554246{% endif %}"
+prometheus_rds_exporter_arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}x86_64{% endif %}"
+prometheus_rds_exporter_url: "https://github.com/qonto/prometheus-rds-exporter/releases/download/{{ prometheus_rds_exporter_version }}/prometheus-rds-exporter_Linux_{{ prometheus_rds_exporter_arch }}.tar.gz"
+prometheus_rds_exporter_user: prometheus-rds-exporter
+prometheus_rds_exporter_group: prometheus-rds-exporter
+prometheus_rds_exporter_install_path: /opt/prometheus-rds-exporter
+prometheus_rds_exporter_config:
+  listen-address: "127.0.0.1:9043"

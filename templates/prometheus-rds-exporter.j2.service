@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=Prometheus RDS exporter
+Requires=network-online.target
+Documentation=https://github.com/qonto/prometheus-rds-exporter
+
+[Service]
+ExecStart={{ prometheus_rds_exporter_install_path }}/prometheus-rds-exporter
+User={{ prometheus_rds_exporter_user }}
+Group={{ prometheus_rds_exporter_group }}
+Restart=on-failure
+SyslogIdentifier=prometheus-rds-exporter
+Type=simple
+WorkingDirectory={{ prometheus_rds_exporter_install_path }}
+
+[Install]
+WantedBy=multi-user.target
+
