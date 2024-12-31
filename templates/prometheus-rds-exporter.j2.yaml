@@ -13,7 +13,7 @@
 # metrics-path: /metrics
 
 # Address to listen on for web interface
-listen-address: "{{ prometheus_rds_exporter_config.listen-address }}"
+listen-address: "{{ prometheus_rds_exporter_config.listen_address }}"
 
 # Path to TLS certificate
 # tls-cert-path: ""

@@ -6,4 +6,4 @@ prometheus_rds_exporter_user: prometheus-rds-exporter
 prometheus_rds_exporter_group: prometheus-rds-exporter
 prometheus_rds_exporter_install_path: /opt/prometheus-rds-exporter
 prometheus_rds_exporter_config:
-  listen-address: "127.0.0.1:9043"
+  listen_address: "127.0.0.1:9043"
