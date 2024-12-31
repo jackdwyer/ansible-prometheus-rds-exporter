@@ -15,7 +15,7 @@
   become: yes
   become_user: "{{ prometheus_rds_exporter_user }}"
   ansible.builtin.get_url:
-    url: "{{ prometheus_rds_exporter_download_url }}"
+    url: "{{ prometheus_rds_exporter_url }}"
     dest: "{{ prometheus_rds_exporter_install_path }}/prometheus-rds-exporter_Linux.tar.gz"
     checksum: "{{ prometheus_rds_exporter_checksum }}"
 
